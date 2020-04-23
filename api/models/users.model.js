@@ -24,10 +24,10 @@ const userSchema = new mongoose.Schema({
     type: Number,
     default: Date.now()
   },
-  task: {
+  task: [{
     type: [mongoose.Schema.Types.ObjectId],
     ref: 'task'
-  }
+  }]
 })
 
 const userModel = mongoose.model('user', userSchema)

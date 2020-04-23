@@ -9,7 +9,7 @@ const taskSchema = new mongoose.Schema({
     type: String
   },
   task: {
-    type: [String]
+    type: String
   }
 })
 

@@ -1,37 +1,42 @@
 const UserModel = require('../models/users.model')
+const TaskModel = require('../models/task.model')
+
 const { handleError } = require('../utils')
 
 module.exports = {
-  getAllUsers,
-  getUserById,
-  deleteUserById,
-  updateUser
+  getMyTask,
+  createTask,
+  deleteTask,
+  updateTask
 }
 
-function getAllUsers (req, res) {
-  UserModel
-    .find()
+function getMyTask (req, res) {
+  TaskModel
+    .find({ author: res.locals.user._id })
     .then(response => res.json(response))
     .catch((err) => handleError(err, res))
 }
 
-function getUserById (req, res) {
-  UserModel
-    .findById(req.params.id)
+function createTask (req, res) {
+  TaskModel
+    .create({
+      author: res.locals.user._id,
+      ...req.body
+    })
     .then(response => res.json(response))
     .catch((err) => handleError(err, res))
 }
 
-function deleteUserById (req, res) {
+function deleteTask (req, res) {
   UserModel
     .remove({ _id: req.params.id })
     .then(response => res.json(response))
     .catch(err => handleError(err, res))
 }
 
-function updateUser (req, res) {
+function updateTask (req, res) {
   UserModel
-    .findByIdAndUpdate(req.params.id, req.body, {
+    .update({ email: res.locals.user.email }, req.body, {
       new: true,
       runValidators: true
     })
