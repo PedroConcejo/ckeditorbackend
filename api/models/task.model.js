@@ -10,6 +10,9 @@ const taskSchema = new mongoose.Schema({
   },
   task: {
     type: String
+  },
+  color: {
+    type: String
   }
 })
 
